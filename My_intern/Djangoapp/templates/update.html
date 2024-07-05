@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .nav-links {
+            margin-bottom: 20px;
+        }
+        .nav-links a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-container input[type="text"],
+        .form-container input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-container button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+        .messages {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .messages li {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-links">
+        <a href="{% url 'view_blogs' %}">Read Blogs</a>
+        <a href="{% url 'add_blog' %}">Create Blog</a>
+    </div>
+    <div class="form-container">
+        <h2>Update Blog</h2>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="title">Title</label>
+            <input id="title" name="title" type="text" value="{{ blogs.title }}" required>
+            
+            <label for="subtitle">Subtitle</label>
+            <input id="subtitle" name="subtitle" type="text" value="{{ blogs.subtitle }}" required>
+            
+            <label for="description">Description</label>
+            <input id="description" name="description" type="text" value="{{ blogs.description }}" required>
+            
+            <label for="image">Image</label>
+            <input id="image" name="image" type="file">
+            
+            <button type="submit">Update Blog</button>
+        </form>
+    </div>
+</body>
+</html>

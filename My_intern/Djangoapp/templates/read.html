@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Blogs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .nav-links {
+            margin-bottom: 20px;
+        }
+        .nav-links a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        .messages {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .messages li {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        img {
+            max-height: 100px;
+        }
+        .action-links a {
+            margin-right: 10px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .action-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-links">
+        <a href="{% url 'view_blogs' %}">Read Blogs</a>
+        <a href="{% url 'add_blog' %}">Create Blog</a>
+    </div>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Subtitle</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for blog in blogs %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ blog.title }}</td>
+                <td>{{ blog.subtitle }}</td>
+                <td>{{ blog.description }}</td>
+                <td>
+                    {% if blog.image %}
+                        <img src="{{ blog.image.url }}" alt="Blog Image">
+                    {% else %}
+                        No Image Available
+                    {% endif %}
+                </td>
+                <td class="action-links">
+                    <a href="{% url 'edit_blog' blog.id %}">Update</a>
+                    <a href="{% url 'remove_blog' blog.id %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
